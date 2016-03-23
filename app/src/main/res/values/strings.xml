@@ -3,7 +3,11 @@
     <string name="action_settings">Settings</string>
     <string name="title_activity_monster">モンスター一覧</string>
     <string name="title_activity_gacha">ガチャ結果</string>
+    <string name="title_activity_gachalist">ガチャ獲得モンスター</string>
     <string name="title_activity_dungeon">Dungeon</string>
     <string name="title_activity_dungeon_history">Dungeon_history</string>
+    <string name="title_activity_gacha_dialog">gacha_dialog</string>
+    <string name="title_activity_gacha_save">gacha_save</string>
+    <string name="undo">取り消す</string>
 
 </resources>

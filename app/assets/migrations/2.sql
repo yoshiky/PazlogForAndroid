@@ -1,0 +1,1 @@
+ALTER TALBE Gacha_history RENAME COLUMN Got_at TO GotAt;

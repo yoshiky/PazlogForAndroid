@@ -15,6 +15,6 @@ public class Gacha_history extends Model{
     @Column(name="MonsterName")
     public String MonsterName;
 
-    @Column(name="got_at")
-    public Date got_at;
+    @Column(name="GotAt")
+    public Date GotAt;
 }
