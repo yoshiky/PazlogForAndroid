@@ -3,15 +3,20 @@ package com.example.yoshiki.pazlog;
 import java.util.Date;
 
 public class MyGachaMonsterListItem {
-    protected int id;
+    protected Long id;
     protected String monster_name;
     protected int egg_type;
     protected Date got_at;
 
-    public MyGachaMonsterListItem(String monster_name, int egg_type, Date got_at) {
+    public MyGachaMonsterListItem(Long id, String monster_name, int egg_type, Date got_at) {
+        this.id = id;
         this.monster_name = monster_name;
         this.egg_type = egg_type;
         this.got_at = got_at;
+    }
+
+    public Long getId(){
+        return id;
     }
 
     public String getMonster_name() {

@@ -9,5 +9,6 @@
     <string name="title_activity_gacha_dialog">gacha_dialog</string>
     <string name="title_activity_gacha_save">gacha_save</string>
     <string name="undo">取り消す</string>
+    <string name="action_favorite">FAVORITE</string>
 
 </resources>

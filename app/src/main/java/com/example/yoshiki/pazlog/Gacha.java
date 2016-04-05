@@ -1,27 +1,29 @@
 package com.example.yoshiki.pazlog;
 
 import android.app.Activity;
-import android.content.ContentValues;
+import android.app.AlertDialog;
+import android.content.ClipData;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
+import android.view.ActionMode;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.inputmethod.CorrectionInfo;
 import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.BaseAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
-import android.widget.Toast;
 
+import com.activeandroid.query.Delete;
 import com.activeandroid.query.Select;
 
 import java.text.SimpleDateFormat;
@@ -57,7 +59,7 @@ public class Gacha extends AppCompatActivity {
     @Override
     protected void onResume() {
 
-        List<MyGachaMonsterListItem> monsters = new ArrayList<>();
+        final List<MyGachaMonsterListItem> monsters = new ArrayList<>();
 
         List<Gacha_history> lists = new Select().from(Gacha_history.class).orderBy("GotAt DESC").execute();
         for (Gacha_history list : lists){
@@ -66,6 +68,7 @@ public class Gacha extends AppCompatActivity {
 //            Log.d("mylog", String.valueOf(list.GotAt));
 
             myGachaMonsterListItem = new MyGachaMonsterListItem(
+                list.getId(),
                 list.MonsterName,
                 list.EggType,
                 list.GotAt
@@ -74,18 +77,50 @@ public class Gacha extends AppCompatActivity {
 
         }
 
-        MyBaseAdaptor myBaseAdaptor = new MyBaseAdaptor(this, monsters);
-
+        final MyBaseAdaptor myBaseAdaptor = new MyBaseAdaptor(this, monsters);
         final ListView mlist = (ListView) this.findViewById(R.id.mListView);
         mlist.setAdapter(myBaseAdaptor);
 
         super.onResume();
 
-        mlist.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
+            mlist.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
             @Override
-            public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
-                String msg = position + "番目のアイテムが押されました。";
-                Toast.makeText(getApplicationContext(), msg, Toast.LENGTH_LONG).show();
+            public boolean onItemLongClick(AdapterView<?> parent, View view, final int position, long id) {
+
+                final ActionBar actionBar = getSupportActionBar();
+                startActionMode(new ActionMode.Callback() {
+                    @Override
+                    public boolean onCreateActionMode(ActionMode mode, Menu menu) {
+                        mode.getMenuInflater().inflate(R.menu.gachalist, menu);
+
+                        return true;
+                    }
+
+                    @Override
+                    public boolean onPrepareActionMode(ActionMode mode, Menu menu) {
+                        return false;
+                    }
+
+                    @Override
+                    public boolean onActionItemClicked(ActionMode mode, MenuItem item) {
+                        switch (item.getItemId()){
+                            case R.id.icon_discard:
+
+                                myBaseAdaptor.removeItem(position);
+                                myBaseAdaptor.notifyDataSetChanged();
+                                mode.finish();
+
+                                return true;
+                            case R.id.icon_edit:
+                                break;
+                        }
+                        return false;
+                    }
+
+                    @Override
+                    public void onDestroyActionMode(ActionMode mode) {
+                    }
+                });
                 return true;
             }
         });
@@ -147,6 +182,12 @@ public class Gacha extends AppCompatActivity {
             holder.gotAt.setText( new SimpleDateFormat(DATE_PATTERN).format( myGachaMonsterListItem.getGot_at()));
 
             return convertView;
+        }
+
+        public void removeItem(int position){
+            Long monster_id = monsters.get(position).getId();
+            new Delete().from(Gacha_history.class).where("id = ?", monster_id).execute();
+            monsters.remove(position);
         }
     }
 
