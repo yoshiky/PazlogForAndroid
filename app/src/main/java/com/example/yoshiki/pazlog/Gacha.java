@@ -87,7 +87,6 @@ public class Gacha extends AppCompatActivity {
             @Override
             public boolean onItemLongClick(AdapterView<?> parent, View view, final int position, long id) {
 
-                final ActionBar actionBar = getSupportActionBar();
                 startActionMode(new ActionMode.Callback() {
                     @Override
                     public boolean onCreateActionMode(ActionMode mode, Menu menu) {
@@ -106,7 +105,9 @@ public class Gacha extends AppCompatActivity {
                         switch (item.getItemId()){
                             case R.id.icon_discard:
 
-                                myBaseAdaptor.removeItem(position);
+                                Long monster_id = monsters.get(position).getId();
+                                new Delete().from(Gacha_history.class).where("id = ?", monster_id).execute();
+                                monsters.remove(position);
                                 myBaseAdaptor.notifyDataSetChanged();
                                 mode.finish();
 
@@ -184,11 +185,6 @@ public class Gacha extends AppCompatActivity {
             return convertView;
         }
 
-        public void removeItem(int position){
-            Long monster_id = monsters.get(position).getId();
-            new Delete().from(Gacha_history.class).where("id = ?", monster_id).execute();
-            monsters.remove(position);
-        }
     }
 
 }
