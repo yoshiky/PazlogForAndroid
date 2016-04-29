@@ -17,4 +17,10 @@ public class Gacha_history extends Model{
 
     @Column(name="GotAt")
     public Date GotAt;
+
+    @Column(name="Status")
+    public int Status;
+
+    @Column(name="DeletedAt")
+    public Date DeletedAt;
 }

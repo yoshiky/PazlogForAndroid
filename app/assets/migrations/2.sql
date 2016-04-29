@@ -1,1 +1,1 @@
-ALTER TALBE Gacha_history RENAME COLUMN Got_at TO GotAt;
+ALTER TABLE Gacha_history ADD COLUMN Status int;

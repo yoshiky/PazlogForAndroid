@@ -16,8 +16,8 @@ import android.widget.EditText;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.Toast;
-
 import java.util.Date;
+import com.example.yoshiki.pazlog.constants.GachaHistoryConstants;
 
 public class Gacha_save extends AppCompatActivity {
 
@@ -74,6 +74,7 @@ public class Gacha_save extends AppCompatActivity {
                     ga.EggType = eggType;
                     ga.MonsterName = monster;
                     ga.GotAt = new Date();
+                    ga.Status = GachaHistoryConstants.NEW;
                     ga.save();
 
                     Snackbar.make(v, monster + " を登録しました。", Snackbar.LENGTH_LONG)

@@ -14,7 +14,7 @@
             android:value="pazlog.db" />
         <meta-data
             android:name="AA_DB_VERSION"
-            android:value="2" />
+            android:value="3" />
 
         <activity
             android:name=".MainActivity"
@@ -47,5 +47,6 @@
             android:label="@string/title_activity_gacha_save"
             android:theme="@style/AppTheme.NoActionBar"/>
     </application>
+    <uses-permission android:name="android.permission.INTERNET" />
 
 </manifest>

@@ -7,12 +7,14 @@ public class MyGachaMonsterListItem {
     protected String monster_name;
     protected int egg_type;
     protected Date got_at;
+    protected int status;
 
-    public MyGachaMonsterListItem(Long id, String monster_name, int egg_type, Date got_at) {
+    public MyGachaMonsterListItem(Long id, String monster_name, int egg_type, Date got_at, int status) {
         this.id = id;
         this.monster_name = monster_name;
         this.egg_type = egg_type;
         this.got_at = got_at;
+        this.status = status;
     }
 
     public Long getId(){
@@ -23,8 +25,25 @@ public class MyGachaMonsterListItem {
         return monster_name;
     }
 
-    public int getEgg_type() {
-        return egg_type;
+    public String getStatusStr() {
+        String statusStr;
+        switch (status){
+            case 0:
+                statusStr = "SYNC";
+                break;
+            case 1:
+                statusStr = "NEW";
+                break;
+            case 2:
+                statusStr = "EDIT";
+                break;
+            case 3:
+                statusStr = "DELETE";
+                break;
+            default:
+                statusStr = "unknown status";
+        }
+        return statusStr;
     }
 
     public String getEggTypeStr() {
@@ -48,4 +67,5 @@ public class MyGachaMonsterListItem {
     public Date getGot_at() {
         return got_at;
     }
+
 }

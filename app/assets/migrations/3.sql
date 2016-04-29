@@ -1,0 +1,1 @@
+ALTER TABLE Gacha_history ADD COLUMN DeletedAt INTEGER;
